@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Best countries in the world</title>
+</head>
+<body>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: gray;
+    }
+    .container {
+      width: 1000px;
+      height: 800px;
+      margin: 50px auto 0;
+      border: 1px solid gray;
+      border-radius: 5px;
+      padding-top: 10px;
+    }
+    #chart, .header, #legend1, #legend2 {
+      width: 95%;
+      margin: auto;
+    }
+    #chart{
+      height: 600px;
+    }
+    #chart svg {
+      width: 100%;
+      height: 100%;
+    }
+    .header{
+      margin: 15px 30px;
+    }
+    h1, p{
+      margin-block: 5px;
+    }
+    hr {
+      border: none;
+      outline: none;
+      height: 1px;
+      background-color: gray;
+    }
+
+    #legend1, #legend2 {
+      display: flex;
+      justify-content: space-around;
+      padding-block: 10px;
+      line-height: 40px;
+      font-size: 14px;
+      font-weight: bold;   
+    }
+
+    #lengen2 div{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .domain, .tick line {
+      stroke: gray;
+    }
+    .tick text {
+      fill: gray;
+    }
+    
+  </style>
+  <div class="container">
+    <div class="header">
+      <h1>Top 5 Best countries in the world</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad optio, molestiae similique asperiores quam tenetur suscipit, cumque quae corrupti nostrum in quasi obcaecati molestias pariatur praesentium ea quidem ipsum temporibus.<
+    </div>
+    <hr>
+
+    <div id="chart">
+      <svg></svg>
+    </div>
+    <hr>
+
+    <div id="legend1"></div>
+
+    <hr>
+    <div id="legend2"></div>
+      
+  </div>
+  
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="index.js"></script>
+</html>
