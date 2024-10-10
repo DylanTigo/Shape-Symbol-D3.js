@@ -12,17 +12,21 @@ async function draw () {
   });
 
   const xAccessor = d => d.GDP
+  const ctryAccessor = d => d.Country
 
+  // Variables
   const parameters = ["Adventure", "Cultural Influence", "Entrepreneurship", "Heritage", "Power"]
   const svg = d3.select('#chart svg')
   const width = svg.node().clientWidth
   const height = svg.node().clientHeight
   const margin = 30
 
+  // Container
   const ctr = svg.append('g')
     .attr('transform', `translate(${margin}, 0)`)
 
 
+  // Scales and Axis
   const yScale = d3.scaleLinear().domain([0, 100]).range([height - margin, margin])
   const yAxis = d3.axisLeft(yScale)
   ctr.append('g')
@@ -34,26 +38,37 @@ async function draw () {
     .attr('transform', `translate(0, ${height-margin})`)
     .call(xAxis)
 
+  // Color and symbol Scale
   const colorScale = d3.scaleOrdinal()
-    .domain(data.map(d => d.Country))
+    .domain(data.map(ctryAccessor))
     .range(d3.schemeDark2)
 
   const symbolScale = d3.scaleOrdinal()
     .domain(parameters)
     .range([d3.symbolCircle, d3.symbolCross, d3.symbolDiamond, d3.symbolSquare, d3.symbolStar]);
 
-  
+  // Draw Symbol
   parameters.forEach(param => {
     const className = param.toLowerCase().replace(/\s+/g, '-')
 
     ctr.selectAll(`${className}`)
       .data(data)
       .join("path")
-      .attr("d", d3.symbol().type(symbolScale(param)).size(100))
-      .attr("transform", d => `translate(${xScale(xAccessor(d))}, ${yScale(+d[param])})`)
-      .attr("stroke", "black")
+      .attr("d", d3.symbol().type(symbolScale(param)).size(70))
+      .attr("transform", d => `translate(${xScale(xAccessor(d))}, ${yScale(d[param])})`)
+      .attr("fill", d => colorScale(d.Country)+"bb")
+      .attr("stroke", d => colorScale(d.Country))
       .attr("stroke-width", 1)
   })
+
+  //Lengend 1
+  d3.select("#legend1")
+    .selectAll("span")
+    .data(data)
+    .join("span")
+    .attr("class", "legend")
+    .style("color", d => colorScale(d.Country))
+    .text(ctryAccessor)
 }
 
 draw();
