@@ -12,10 +12,11 @@ async function draw () {
   });
 
   const xAccessor = d => d.GDP
-  const ctryAccessor = d => d.Country
+
+  // Get the list of parameters without the first one(Country)
+  const parameters = data.columns.slice(2)
 
   // Variables
-  const parameters = ["Adventure", "Cultural Influence", "Entrepreneurship", "Heritage", "Power"]
   const svg = d3.select('#chart svg')
   const width = svg.node().clientWidth
   const height = svg.node().clientHeight
@@ -40,7 +41,7 @@ async function draw () {
 
   // Color and symbol Scale
   const colorScale = d3.scaleOrdinal()
-    .domain(data.map(ctryAccessor))
+    .domain(data.map(d => d.Country))
     .range(d3.schemeDark2)
 
   const symbolScale = d3.scaleOrdinal()
@@ -66,9 +67,27 @@ async function draw () {
     .selectAll("span")
     .data(data)
     .join("span")
-    .attr("class", "legend")
     .style("color", d => colorScale(d.Country))
-    .text(ctryAccessor)
+    .text(d => d.Country)
+
+  //Legend3
+  const legend2 = d3.select("#legend2")
+  const svgSize = 15
+
+  parameters.forEach((param, i) => {
+    const div = legend2.append("div")
+    div
+      .append("svg")
+      .attr('width', svgSize)
+      .attr('height', svgSize)
+      .append("path")
+      .attr("d", d3.symbol().type(symbolScale(param)).size(80))
+      .attr("transform", `translate(${svgSize/2}, ${svgSize/2})`)
+
+    div.append("p").node().textContent = param
+
+  })
+    
 }
 
 draw();
